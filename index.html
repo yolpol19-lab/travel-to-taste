@@ -140,8 +140,72 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .qs-field label{font-size:11px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--color-cool-ash)}
 .qs-field select,.qs-field input{font-family:inherit;font-size:14px;font-weight:400;color:var(--color-deep-ink);background:#fafafa;border:1px solid var(--color-pebble);padding:11px 14px;border-radius:6px;outline:none;transition:border-color .2s,background .2s;width:100%;}
 .qs-field select:focus,.qs-field input:focus{border-color:var(--color-deep-ink);background:#fff}
-.qs-submit{grid-column:1/-1;margin-top:6px;background:var(--color-deep-ink);color:#fff;padding:14px 22px;border-radius:var(--radius-pill);font-size:15px;font-weight:700;letter-spacing:-0.2px;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .3s,background .3s;}
-.qs-submit:hover{transform:translateY(-2px);background:#001a1f}
+.qs-kids-container{display:flex;gap:12px;width:100%;}
+@media(max-width:480px){.qs-kids-container{flex-direction:column;}}
+
+/* КНОПКИ ОТПРАВКИ В МЕССЕНДЖЕРЫ */
+.qs-buttons-wrapper {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.qs-buttons-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--color-cool-ash);
+}
+.qs-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media(max-width:600px){
+  .qs-buttons-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.qs-btn {
+  padding: 14px 16px;
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform .3s, background .3s, border-color .3s;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.qs-btn:hover {
+  transform: translateY(-2px);
+}
+.qs-btn-max {
+  background: var(--color-deep-ink);
+  color: #fff;
+}
+.qs-btn-max:hover {
+  background: #001a1f;
+}
+.qs-btn-tg {
+  background: #229ED9;
+  color: #fff;
+}
+.qs-btn-tg:hover {
+  background: #1c8abd;
+}
+.qs-btn-wa {
+  background: #25D366;
+  color: #fff;
+}
+.qs-btn-wa:hover {
+  background: #20ba5a;
+}
 
 /* FORMATS */
 .formats{background:var(--color-pure-white);padding:90px 40px;}
@@ -303,10 +367,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 <section class="section search-section" id="search">
   <div class="section-label reveal">01 — Подбор тура</div>
   <h2 class="section-headline reveal">Заявка на <span class="period">тур</span></h2>
-  <p class="section-intro reveal">Заполните параметры отдыха, и я подготовлю для вас персональную подборку туров с лучшими ценами. Заявка уйдёт прямо мне в WhatsApp.</p>
+  <p class="section-intro reveal">Заполните параметры отдыха, и я подготовлю для вас персональную подборку туров с лучшими ценами. Заявка уйдёт в удобный мессенджер.</p>
   <div class="search-card reveal">
     <div class="search-card-title">Быстрый подбор</div>
-    <div class="search-card-desc">Оставьте параметры, и я пришлю подходящие варианты отелей и туров лично в WhatsApp.</div>
+    <div class="search-card-desc">Оставьте параметры, и пришлю подходящие варианты отелей лично в мессенджер.</div>
     <form class="qs-form" id="qsForm">
       <div class="qs-field full">
         <label for="qs-name">Ваше ФИО</label>
@@ -329,21 +393,28 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
           <option value="russia">Россия (Сочи, Калининград, Алтай)</option>
         </select>
       </div>
-      <div class="qs-field">
+      <div class="qs-field full">
         <label for="qs-from">Откуда</label>
         <select id="qs-from" name="from">
           <option value="moscow">Москва</option>
           <option value="spb">Санкт-Петербург</option>
-          <option value="ekb">Екатеринбург</option>
+          <option value="ekb" selected>Екатеринбург</option>
           <option value="kzn">Казань</option>
           <option value="nsk">Новосибирск</option>
           <option value="other">Другой город</option>
         </select>
       </div>
+
+      <!-- Диапазон дат вылета -->
       <div class="qs-field">
-        <label for="qs-date">Дата вылета</label>
-        <input type="date" id="qs-date" name="date">
+        <label for="qs-date-from">Вылет с</label>
+        <input type="date" id="qs-date-from" name="date_from" required>
       </div>
+      <div class="qs-field">
+        <label for="qs-date-to">Вылет по</label>
+        <input type="date" id="qs-date-to" name="date_to" required>
+      </div>
+
       <div class="qs-field">
         <label for="qs-nights">Ночей</label>
         <select id="qs-nights" name="nights">
@@ -356,18 +427,42 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <div class="qs-field">
         <label for="qs-people">Туристов</label>
         <select id="qs-people" name="people">
-          <option value="1">1 взрослый</option>
-          <option value="2" selected>2 взрослых</option>
-          <option value="2-1">2 взрослых + 1 ребёнок</option>
-          <option value="2-2">2 взрослых + 2 ребёнка</option>
-          <option value="3">3 взрослых</option>
-          <option value="4">4 взрослых</option>
+          <option value="1" data-kids="0">1 взрослый</option>
+          <option value="2" data-kids="0" selected>2 взрослых</option>
+
+          <option value="1-1" data-kids="1">1 взрослый + 1 ребёнок</option>
+          <option value="1-2" data-kids="2">1 взрослый + 2 ребёнка</option>
+          <option value="2-1" data-kids="1">2 взрослых + 1 ребёнок</option>
+          <option value="2-2" data-kids="2">2 взрослых + 2 ребёнка</option>
+
+          <option value="3" data-kids="0">3 взрослых</option>
+          <option value="4" data-kids="0">4 взрослых</option>
         </select>
       </div>
-      <button type="submit" class="qs-submit">
-        Отправить заявку
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
+
+      <!-- Блок ввода возраста детей -->
+      <div class="qs-field full" id="qs-kids-wrapper" style="display:none;">
+        <div class="qs-kids-container" id="qs-kids-container"></div>
+      </div>
+
+      <!-- Три кнопки отправки -->
+      <div class="qs-buttons-wrapper">
+        <div class="qs-buttons-title">Отправить заявку через:</div>
+        <div class="qs-buttons-grid">
+          <button type="button" class="qs-btn qs-btn-max" data-messenger="max">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+            Max
+          </button>
+          <button type="button" class="qs-btn qs-btn-tg" data-messenger="tg">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.324-.437.89-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            Telegram
+          </button>
+          <button type="button" class="qs-btn qs-btn-wa" data-messenger="wa">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.608.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </section>
@@ -554,37 +649,117 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 (function(){
   var form = document.getElementById('qsForm');
   if (!form) return;
-  var dateField = document.getElementById('qs-date');
+
+  var dateFrom = document.getElementById('qs-date-from');
+  var dateTo = document.getElementById('qs-date-to');
+  var peopleSelect = document.getElementById('qs-people');
+  var kidsWrapper = document.getElementById('qs-kids-wrapper');
+  var kidsContainer = document.getElementById('qs-kids-container');
+
+  // Начальная установка дат
   var today = new Date();
-  var dd = String(today.getDate()).padStart(2,'0');
-  var mm = String(today.getMonth()+1).padStart(2,'0');
-  dateField.min = today.getFullYear()+'-'+mm+'-'+dd;
-  var def = new Date(); def.setDate(def.getDate()+14);
-  dateField.value = def.getFullYear()+'-'+String(def.getMonth()+1).padStart(2,'0')+'-'+String(def.getDate()).padStart(2,'0');
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var name = document.getElementById('qs-name');
-    var country = document.getElementById('qs-country');
-    var from = document.getElementById('qs-from');
-    var date = document.getElementById('qs-date');
-    var nights = document.getElementById('qs-nights');
-    var people = document.getElementById('qs-people');
-    var nameText = name.value.trim() || 'Не указано';
-    var countryText = country.options[country.selectedIndex].text;
-    var fromText = from.options[from.selectedIndex].text;
-    var nightsText = nights.options[nights.selectedIndex].text;
-    var peopleText = people.options[people.selectedIndex].text;
-    var dateText = date.value ? new Date(date.value).toLocaleDateString('ru-RU') : 'не указана';
-    var msg = 'Здравствуйте! Хочу подобрать тур:\n'+
-              '• ФИО: '+nameText+'\n'+
-              '• Куда: '+countryText+'\n'+
-              '• Откуда: '+fromText+'\n'+
-              '• Дата вылета: '+dateText+'\n'+
-              '• Ночей: '+nightsText+'\n'+
-              '• Туристов: '+peopleText+'\n'+
-              'Подберите варианты, пожалуйста.';
-    var waUrl = 'https://wa.me/79221895963?text='+encodeURIComponent(msg);
-    window.open(waUrl, '_blank', 'noopener');
+  var formatDate = function(d){
+    var dd = String(d.getDate()).padStart(2,'0');
+    var mm = String(d.getMonth()+1).padStart(2,'0');
+    return d.getFullYear()+'-'+mm+'-'+dd;
+  };
+
+  var minStr = formatDate(today);
+  dateFrom.min = minStr;
+  dateTo.min = minStr;
+
+  var defFrom = new Date(); defFrom.setDate(defFrom.getDate()+7);
+  var defTo = new Date(); defTo.setDate(defTo.getDate()+14);
+
+  dateFrom.value = formatDate(defFrom);
+  dateTo.value = formatDate(defTo);
+
+  dateFrom.addEventListener('change', function(){
+    if (dateFrom.value) {
+      dateTo.min = dateFrom.value;
+      if (dateTo.value && dateTo.value < dateFrom.value) {
+        dateTo.value = dateFrom.value;
+      }
+    }
+  });
+
+  // Логика добавления полей для детей
+  function updateKidsFields() {
+    var selectedOption = peopleSelect.options[peopleSelect.selectedIndex];
+    var kidsCount = parseInt(selectedOption.getAttribute('data-kids') || '0', 10);
+
+    if (kidsCount > 0) {
+      kidsWrapper.style.display = 'block';
+      var html = '';
+      for (var i = 1; i <= kidsCount; i++) {
+        var labelText = kidsCount > 1 ? 'Возраст ' + i + '-го ребёнка' : 'Возраст ребёнка';
+        html += '<div class="qs-field" style="flex:1;">' +
+                  '<label>' + labelText + '</label>' +
+                  '<input type="number" class="qs-child-age" min="0" max="17" placeholder="лет (0-17)" required>' +
+                '</div>';
+      }
+      kidsContainer.innerHTML = html;
+    } else {
+      kidsWrapper.style.display = 'none';
+      kidsContainer.innerHTML = '';
+    }
+  }
+
+  peopleSelect.addEventListener('change', updateKidsFields);
+  updateKidsFields();
+
+  // Обработка клика по кнопкам мессенджеров
+  var btns = form.querySelectorAll('.qs-btn');
+  btns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      // Проверка заполнения обязательных полей формы
+      if (!form.reportValidity()) return;
+
+      var messenger = btn.getAttribute('data-messenger');
+      var nameText = document.getElementById('qs-name').value.trim() || 'Не указано';
+      var countryText = document.getElementById('qs-country').options[document.getElementById('qs-country').selectedIndex].text;
+      var fromText = document.getElementById('qs-from').options[document.getElementById('qs-from').selectedIndex].text;
+      var nightsText = document.getElementById('qs-nights').options[document.getElementById('qs-nights').selectedIndex].text;
+      var peopleText = peopleSelect.options[peopleSelect.selectedIndex].text;
+
+      var dateFromText = dateFrom.value ? new Date(dateFrom.value).toLocaleDateString('ru-RU') : 'не указана';
+      var dateToText = dateTo.value ? new Date(dateTo.value).toLocaleDateString('ru-RU') : 'не указана';
+
+      var ageInputs = kidsContainer.querySelectorAll('.qs-child-age');
+      var kidsAges = [];
+      ageInputs.forEach(function(inp){
+        if (inp.value !== '') {
+          kidsAges.push(inp.value + ' лет');
+        }
+      });
+
+      var msg = 'Здравствуйте! Хочу подобрать тур:\n'+
+                '• ФИО: '+nameText+'\n'+
+                '• Куда: '+countryText+'\n'+
+                '• Откуда: '+fromText+'\n'+
+                '• Даты вылета: с '+dateFromText+' по '+dateToText+'\n'+
+                '• Ночей: '+nightsText+'\n'+
+                '• Туристов: '+peopleText;
+
+      if (kidsAges.length > 0) {
+        msg += '\n• Возраст детей: ' + kidsAges.join(', ');
+      }
+
+      msg += '\nПодберите варианты, пожалуйста.';
+
+      var targetUrl = '';
+      if (messenger === 'wa') {
+        targetUrl = 'https://wa.me/79221895963?text=' + encodeURIComponent(msg);
+      } else if (messenger === 'tg') {
+        targetUrl = 'https://t.me/+79221895963?text=' + encodeURIComponent(msg);
+      } else if (messenger === 'max') {
+        targetUrl = 'https://max.ru/u/f9LHodD0cOICdq5qa-p5AtI9h47OjjmsJKZcLp7qKT0zL7v1Zd7208-jxwM?text=' + encodeURIComponent(msg);
+      }
+
+      if (targetUrl) {
+        window.open(targetUrl, '_blank', 'noopener');
+      }
+    });
   });
 })();
 
