@@ -143,6 +143,123 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .qs-kids-container{display:flex;gap:12px;width:100%;}
 @media(max-width:480px){.qs-kids-container{flex-direction:column;}}
 
+/* УНИВЕРСАЛЬНЫЕ КАСТОМНЫЕ ВЫПАДАЮЩИЕ СПИСКИ */
+.custom-dropdown-select {
+  position: relative;
+  width: 100%;
+}
+.custom-select-trigger {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-deep-ink);
+  background: #fafafa;
+  border: 1px solid var(--color-pebble);
+  padding: 11px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: border-color .2s, background .2s;
+  user-select: none;
+}
+.custom-select-trigger:hover, .custom-dropdown-select.open .custom-select-trigger {
+  border-color: var(--color-deep-ink);
+  background: #fff;
+}
+.selected-item-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+.selected-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.country-flag-icon {
+  width: 22px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgba(0,0,0,0.25);
+  flex-shrink: 0;
+}
+.field-icon {
+  color: var(--color-cool-ash);
+  flex-shrink: 0;
+}
+.select-chevron {
+  transition: transform .3s ease;
+  color: var(--color-cool-ash);
+  flex-shrink: 0;
+  margin-left: 6px;
+}
+.custom-dropdown-select.open .select-chevron {
+  transform: rotate(180deg);
+}
+
+.custom-select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid var(--color-pebble);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 50;
+  display: none;
+  padding: 6px 0;
+}
+.custom-dropdown-select.open .custom-select-dropdown {
+  display: block;
+  animation: fadeInDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-category-title {
+  padding: 10px 16px 4px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--color-cool-ash);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.dropdown-item {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background .15s;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+.dropdown-item:hover, .dropdown-item.active {
+  background: #f4f5f7;
+}
+.dropdown-item .item-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-deep-ink);
+  flex-grow: 1;
+}
+.dropdown-item.active .item-name {
+  font-weight: 700;
+}
+
 /* КНОПКИ ОТПРАВКИ В МЕССЕНДЖЕРЫ */
 .qs-buttons-wrapper {
   grid-column: 1 / -1;
@@ -376,33 +493,233 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <label for="qs-name">Ваше ФИО</label>
         <input type="text" id="qs-name" name="name" placeholder="Иванова Мария Ивановна" required>
       </div>
+
+      <!-- 1. КАСТОМНЫЙ СЕЛЕКТ: КУДА (СТРАНЫС ФЛАГАМИ) -->
       <div class="qs-field full">
-        <label for="qs-country">Куда</label>
-        <select id="qs-country" name="country">
-          <option value="">Любое направление</option>
-          <option value="maldives">Мальдивы</option>
+        <label>Куда</label>
+        <select id="qs-country" name="country" style="display: none;">
+          <!-- Популярные -->
+          <option value="maldives" selected>Мальдивы</option>
           <option value="turkey">Турция</option>
-          <option value="thailand">Тайланд</option>
+          <option value="egypt">Египет</option>
+          <option value="vietnam">Вьетнам</option>
+          <option value="thailand">Таиланд</option>
+          <option value="russia">Россия</option>
+          <option value="china">Китай</option>
           <option value="uae">ОАЭ</option>
-          <option value="sri-lanka">Шри-Ланка</option>
+          <!-- Все страны -->
+          <option value="abkhazia">Абхазия</option>
+          <option value="azerbaijan">Азербайджан</option>
+          <option value="armenia">Армения</option>
           <option value="bali">Бали (Индонезия)</option>
-          <option value="cuba">Куба</option>
-          <option value="seychelles">Сейшелы</option>
-          <option value="mexico">Мексика</option>
           <option value="dominicana">Доминикана</option>
-          <option value="russia">Россия (Сочи, Калининград, Алтай)</option>
+          <option value="india">Индия</option>
+          <option value="kazakhstan">Казахстан</option>
+          <option value="qatar">Катар</option>
+          <option value="cuba">Куба</option>
+          <option value="kyrgyzstan">Кыргызстан</option>
+          <option value="mexico">Мексика</option>
+          <option value="oman">Оман</option>
+          <option value="seychelles">Сейшелы</option>
+          <option value="uzbekistan">Узбекистан</option>
+          <option value="montenegro">Черногория</option>
+          <option value="sri-lanka">Шри-Ланка</option>
         </select>
+
+        <div class="custom-dropdown-select" id="customCountrySelect" data-target="qs-country">
+          <div class="custom-select-trigger">
+            <div class="selected-item-info">
+              <span class="selected-icon">
+                <img src="https://flagcdn.com/w40/mv.png" alt="Мальдивы" class="country-flag-icon">
+              </span>
+              <span class="selected-text">Мальдивы</span>
+            </div>
+            <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+
+          <div class="custom-select-dropdown">
+            <div class="dropdown-category-title">Популярные</div>
+            <div class="dropdown-item active" data-val="maldives" data-name="Мальдивы">
+              <img src="https://flagcdn.com/w40/mv.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Мальдивы</span>
+            </div>
+            <div class="dropdown-item" data-val="turkey" data-name="Турция">
+              <img src="https://flagcdn.com/w40/tr.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Турция</span>
+            </div>
+            <div class="dropdown-item" data-val="egypt" data-name="Египет">
+              <img src="https://flagcdn.com/w40/eg.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Египет</span>
+            </div>
+            <div class="dropdown-item" data-val="vietnam" data-name="Вьетнам">
+              <img src="https://flagcdn.com/w40/vn.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Вьетнам</span>
+            </div>
+            <div class="dropdown-item" data-val="thailand" data-name="Таиланд">
+              <img src="https://flagcdn.com/w40/th.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Таиланд</span>
+            </div>
+            <div class="dropdown-item" data-val="russia" data-name="Россия">
+              <img src="https://flagcdn.com/w40/ru.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Россия</span>
+            </div>
+            <div class="dropdown-item" data-val="china" data-name="Китай">
+              <img src="https://flagcdn.com/w40/cn.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Китай</span>
+            </div>
+            <div class="dropdown-item" data-val="uae" data-name="ОАЭ">
+              <img src="https://flagcdn.com/w40/ae.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">ОАЭ</span>
+            </div>
+
+            <div class="dropdown-category-title">Все страны</div>
+            <div class="dropdown-item" data-val="abkhazia" data-name="Абхазия">
+              <img src="https://flagcdn.com/w40/ge.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Абхазия</span>
+            </div>
+            <div class="dropdown-item" data-val="azerbaijan" data-name="Азербайджан">
+              <img src="https://flagcdn.com/w40/az.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Азербайджан</span>
+            </div>
+            <div class="dropdown-item" data-val="armenia" data-name="Армения">
+              <img src="https://flagcdn.com/w40/am.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Армения</span>
+            </div>
+            <div class="dropdown-item" data-val="bali" data-name="Бали (Индонезия)">
+              <img src="https://flagcdn.com/w40/id.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Бали (Индонезия)</span>
+            </div>
+            <div class="dropdown-item" data-val="dominicana" data-name="Доминикана">
+              <img src="https://flagcdn.com/w40/do.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Доминикана</span>
+            </div>
+            <div class="dropdown-item" data-val="india" data-name="Индия">
+              <img src="https://flagcdn.com/w40/in.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Индия</span>
+            </div>
+            <div class="dropdown-item" data-val="kazakhstan" data-name="Казахстан">
+              <img src="https://flagcdn.com/w40/kz.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Казахстан</span>
+            </div>
+            <div class="dropdown-item" data-val="qatar" data-name="Катар">
+              <img src="https://flagcdn.com/w40/qa.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Катар</span>
+            </div>
+            <div class="dropdown-item" data-val="cuba" data-name="Куба">
+              <img src="https://flagcdn.com/w40/cu.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Куба</span>
+            </div>
+            <div class="dropdown-item" data-val="kyrgyzstan" data-name="Кыргызстан">
+              <img src="https://flagcdn.com/w40/kg.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Кыргызстан</span>
+            </div>
+            <div class="dropdown-item" data-val="mexico" data-name="Мексика">
+              <img src="https://flagcdn.com/w40/mx.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Мексика</span>
+            </div>
+            <div class="dropdown-item" data-val="oman" data-name="Оман">
+              <img src="https://flagcdn.com/w40/om.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Оман</span>
+            </div>
+            <div class="dropdown-item" data-val="seychelles" data-name="Сейшелы">
+              <img src="https://flagcdn.com/w40/sc.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Сейшелы</span>
+            </div>
+            <div class="dropdown-item" data-val="uzbekistan" data-name="Узбекистан">
+              <img src="https://flagcdn.com/w40/uz.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Узбекистан</span>
+            </div>
+            <div class="dropdown-item" data-val="montenegro" data-name="Черногория">
+              <img src="https://flagcdn.com/w40/me.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Черногория</span>
+            </div>
+            <div class="dropdown-item" data-val="sri-lanka" data-name="Шри-Ланка">
+              <img src="https://flagcdn.com/w40/lk.png" alt="" class="country-flag-icon item-icon">
+              <span class="item-name">Шри-Ланка</span>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- 2. КАСТОМНЫЙ СЕЛЕКТ: ОТКУДА (ОБНОВЛЕННЫЕ ГОРОДА ВЫЛЕТА) -->
       <div class="qs-field full">
-        <label for="qs-from">Откуда</label>
-        <select id="qs-from" name="from">
-          <option value="moscow">Москва</option>
-          <option value="spb">Санкт-Петербург</option>
+        <label>Откуда</label>
+        <select id="qs-from" name="from" style="display: none;">
+          <option value="volgograd">Волгоград</option>
+          <option value="sochi">Сочи</option>
           <option value="ekb" selected>Екатеринбург</option>
-          <option value="kzn">Казань</option>
-          <option value="nsk">Новосибирск</option>
-          <option value="other">Другой город</option>
+          <option value="kazan">Казань</option>
+          <option value="krasnoyarsk">Красноярск</option>
+          <option value="moscow">Москва</option>
+          <option value="nizhny">Нижний Новгород</option>
+          <option value="novosibirsk">Новосибирск</option>
+          <option value="perm">Пермь</option>
+          <option value="spb">Санкт-Петербург</option>
+          <option value="samara">Самара</option>
+          <option value="ufa">Уфа</option>
         </select>
+
+        <div class="custom-dropdown-select" id="customCitySelect" data-target="qs-from">
+          <div class="custom-select-trigger">
+            <div class="selected-item-info">
+              <span class="selected-icon">
+                <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              </span>
+              <span class="selected-text">Екатеринбург</span>
+            </div>
+            <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="custom-select-dropdown">
+            <div class="dropdown-item" data-val="volgograd" data-name="Волгоград">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Волгоград</span>
+            </div>
+            <div class="dropdown-item" data-val="sochi" data-name="Сочи">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Сочи</span>
+            </div>
+            <div class="dropdown-item active" data-val="ekb" data-name="Екатеринбург">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Екатеринбург</span>
+            </div>
+            <div class="dropdown-item" data-val="kazan" data-name="Казань">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Казань</span>
+            </div>
+            <div class="dropdown-item" data-val="krasnoyarsk" data-name="Красноярск">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Красноярск</span>
+            </div>
+            <div class="dropdown-item" data-val="moscow" data-name="Москва">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Москва</span>
+            </div>
+            <div class="dropdown-item" data-val="nizhny" data-name="Нижний Новгород">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Нижний Новгород</span>
+            </div>
+            <div class="dropdown-item" data-val="novosibirsk" data-name="Новосибирск">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Новосибирск</span>
+            </div>
+            <div class="dropdown-item" data-val="perm" data-name="Пермь">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Пермь</span>
+            </div>
+            <div class="dropdown-item" data-val="spb" data-name="Санкт-Петербург">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Санкт-Петербург</span>
+            </div>
+            <div class="dropdown-item" data-val="samara" data-name="Самара">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Самара</span>
+            </div>
+            <div class="dropdown-item" data-val="ufa" data-name="Уфа">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 3a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="item-name">Уфа</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Диапазон дат вылета -->
@@ -415,18 +732,51 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <input type="date" id="qs-date-to" name="date_to" required>
       </div>
 
+      <!-- 3. КАСТОМНЫЙ СЕЛЕКТ: НОЧЕЙ -->
       <div class="qs-field">
-        <label for="qs-nights">Ночей</label>
-        <select id="qs-nights" name="nights">
-          <option value="5-7">5–7</option>
-          <option value="7-10" selected>7–10</option>
-          <option value="10-14">10–14</option>
-          <option value="14+">14+</option>
+        <label>Ночей</label>
+        <select id="qs-nights" name="nights" style="display: none;">
+          <option value="5-7">5–7 ночей</option>
+          <option value="7-10" selected>7–10 ночей</option>
+          <option value="10-14">10–14 ночей</option>
+          <option value="14+">14+ ночей</option>
         </select>
+
+        <div class="custom-dropdown-select" id="customNightsSelect" data-target="qs-nights">
+          <div class="custom-select-trigger">
+            <div class="selected-item-info">
+              <span class="selected-icon">
+                <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </span>
+              <span class="selected-text">7–10 ночей</span>
+            </div>
+            <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="custom-select-dropdown">
+            <div class="dropdown-item" data-val="5-7" data-name="5–7 ночей">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <span class="item-name">5–7 ночей</span>
+            </div>
+            <div class="dropdown-item active" data-val="7-10" data-name="7–10 ночей">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <span class="item-name">7–10 ночей</span>
+            </div>
+            <div class="dropdown-item" data-val="10-14" data-name="10–14 ночей">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <span class="item-name">10–14 ночей</span>
+            </div>
+            <div class="dropdown-item" data-val="14+" data-name="14+ ночей">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <span class="item-name">14+ ночей</span>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- 4. КАСТОМНЫЙ СЕЛЕКТ: ТУРИСТОВ -->
       <div class="qs-field">
-        <label for="qs-people">Туристов</label>
-        <select id="qs-people" name="people">
+        <label>Туристов</label>
+        <select id="qs-people" name="people" style="display: none;">
           <option value="1" data-kids="0">1 взрослый</option>
           <option value="2" data-kids="0" selected>2 взрослых</option>
 
@@ -438,6 +788,52 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
           <option value="3" data-kids="0">3 взрослых</option>
           <option value="4" data-kids="0">4 взрослых</option>
         </select>
+
+        <div class="custom-dropdown-select" id="customPeopleSelect" data-target="qs-people">
+          <div class="custom-select-trigger">
+            <div class="selected-item-info">
+              <span class="selected-icon">
+                <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </span>
+              <span class="selected-text">2 взрослых</span>
+            </div>
+            <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="custom-select-dropdown">
+            <div class="dropdown-item" data-val="1" data-name="1 взрослый">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span class="item-name">1 взрослый</span>
+            </div>
+            <div class="dropdown-item active" data-val="2" data-name="2 взрослых">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="item-name">2 взрослых</span>
+            </div>
+            <div class="dropdown-item" data-val="1-1" data-name="1 взрослый + 1 ребёнок">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="item-name">1 взрослый + 1 ребёнок</span>
+            </div>
+            <div class="dropdown-item" data-val="1-2" data-name="1 взрослый + 2 ребёнка">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="item-name">1 взрослый + 2 ребёнка</span>
+            </div>
+            <div class="dropdown-item" data-val="2-1" data-name="2 взрослых + 1 ребёнок">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="item-name">2 взрослых + 1 ребёнок</span>
+            </div>
+            <div class="dropdown-item" data-val="2-2" data-name="2 взрослых + 2 ребёнка">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="item-name">2 взрослых + 2 ребёнка</span>
+            </div>
+            <div class="dropdown-item" data-val="3" data-name="3 взрослых">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="item-name">3 взрослых</span>
+            </div>
+            <div class="dropdown-item" data-val="4" data-name="4 взрослых">
+              <svg class="field-icon item-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="item-name">4 взрослых</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Блок ввода возраста детей -->
@@ -646,6 +1042,58 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 </footer>
 
 <script>
+// ИНИЦИАЛИЗАЦИЯ УНИВЕРСАЛЬНЫХ ВЫПАДАЮЩИХ СПИСКОВ
+(function(){
+  var dropdowns = document.querySelectorAll('.custom-dropdown-select');
+  dropdowns.forEach(function(wrapper){
+    var trigger = wrapper.querySelector('.custom-select-trigger');
+    var targetId = wrapper.getAttribute('data-target');
+    var hiddenSelect = document.getElementById(targetId);
+    var selectedText = wrapper.querySelector('.selected-text');
+    var selectedIconContainer = wrapper.querySelector('.selected-icon');
+    var items = wrapper.querySelectorAll('.dropdown-item');
+
+    trigger.addEventListener('click', function(e){
+      e.stopPropagation();
+      dropdowns.forEach(function(other){
+        if (other !== wrapper) other.classList.remove('open');
+      });
+      wrapper.classList.toggle('open');
+    });
+
+    items.forEach(function(item){
+      item.addEventListener('click', function(e){
+        e.stopPropagation();
+        var val = item.getAttribute('data-val');
+        var name = item.getAttribute('data-name');
+        var itemIcon = item.querySelector('.item-icon');
+
+        if (selectedText) selectedText.textContent = name;
+        if (selectedIconContainer && itemIcon) {
+          selectedIconContainer.innerHTML = itemIcon.outerHTML;
+        }
+
+        items.forEach(function(el){ el.classList.remove('active'); });
+        item.classList.add('active');
+
+        if (hiddenSelect) {
+          hiddenSelect.value = val;
+          var event = new Event('change', { bubbles: true });
+          hiddenSelect.dispatchEvent(event);
+        }
+
+        wrapper.classList.remove('open');
+      });
+    });
+  });
+
+  document.addEventListener('click', function(){
+    dropdowns.forEach(function(wrapper){
+      wrapper.classList.remove('open');
+    });
+  });
+})();
+
 (function(){
   var form = document.getElementById('qsForm');
   if (!form) return;
