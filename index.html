@@ -260,6 +260,77 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   font-weight: 700;
 }
 
+/* ЮРИДИЧЕСКИЕ ЧЕКБОКСЫ */
+.qs-legal {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 1px solid var(--color-pebble);
+}
+.qs-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.qs-checkbox-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.qs-checkbox-custom {
+  position: relative;
+  top: 2px;
+  width: 18px;
+  height: 18px;
+  background-color: #fafafa;
+  border: 1px solid var(--color-pebble);
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.qs-checkbox-label:hover input ~ .qs-checkbox-custom {
+  border-color: var(--color-deep-ink);
+}
+.qs-checkbox-label input:checked ~ .qs-checkbox-custom {
+  background-color: var(--color-deep-ink);
+  border-color: var(--color-deep-ink);
+}
+.qs-checkbox-custom:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 6px;
+  top: 2px;
+  width: 4px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.qs-checkbox-label input:checked ~ .qs-checkbox-custom:after {
+  display: block;
+}
+.qs-checkbox-text {
+  font-size: 12px;
+  color: var(--color-cool-ash);
+  line-height: 1.4;
+}
+.qs-checkbox-text a {
+  color: var(--color-deep-ink);
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+.qs-checkbox-text a:hover {
+  color: var(--color-clay-ember);
+}
+
 /* КНОПКИ ОТПРАВКИ В МЕССЕНДЖЕРЫ */
 .qs-buttons-wrapper {
   grid-column: 1 / -1;
@@ -324,7 +395,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   background: #20ba5a;
 }
 
-/* FORMATS */
+/* ФОРМАТЫ ОТДЫХА */
 .formats{background:var(--color-pure-white);padding:90px 40px;}
 .formats > *{max-width:var(--page-max);margin-left:auto;margin-right:auto;}
 @media(max-width:680px){.formats{padding:60px 22px}}
@@ -403,6 +474,165 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .footer-social{display:flex;gap:10px}
 .footer-social a{width:42px;height:42px;border-radius:100%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .3s,border-color .3s,transform .3s;}
 .footer-social a:hover{background:#fff;color:var(--color-deep-ink);border-color:#fff;transform:translateY(-2px)}
+
+/* ПОЛИТИКА COOKIE И МОДАЛЬНОЕ ОКНО */
+.cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  width: calc(100% - 40px);
+  max-width: 800px;
+  background: var(--color-deep-ink);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s, visibility 0.5s;
+}
+.cookie-banner.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+.cookie-text {
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+.cookie-text a {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: 700;
+  transition: color .2s;
+}
+.cookie-text a:hover {
+  color: var(--color-clay-ember);
+}
+.cookie-btn {
+  background: #fff;
+  color: var(--color-deep-ink);
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: transform .2s, background .2s;
+}
+.cookie-btn:hover {
+  transform: translateY(-2px);
+  background: #f0f0f0;
+}
+@media(max-width: 600px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .cookie-btn {
+    width: 100%;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 13, 16, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 640px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+.modal-overlay.show .modal-content {
+  transform: translateY(0);
+}
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #f0f0f4;
+  border: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 100%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-deep-ink);
+  transition: background .2s, transform .2s;
+  z-index: 2;
+}
+.modal-close:hover {
+  background: #e2e2e8;
+  transform: scale(1.05);
+}
+.modal-header {
+  padding: 24px 30px 20px;
+  border-bottom: 1px solid var(--color-pebble);
+}
+.modal-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-deep-ink);
+  margin: 0;
+  padding-right: 40px;
+  letter-spacing: -0.3px;
+}
+.modal-body {
+  padding: 24px 30px;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-cool-ash);
+}
+.modal-body h3 {
+  color: var(--color-deep-ink);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 20px 0 10px;
+}
+.modal-body p {
+  margin-bottom: 14px;
+}
+.modal-body ul {
+  margin-bottom: 14px;
+  padding-left: 20px;
+}
+.modal-body li {
+  margin-bottom: 6px;
+}
 
 /* ANIMATIONS */
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
@@ -494,10 +724,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <input type="text" id="qs-name" name="name" placeholder="Иванова Мария Ивановна" required>
       </div>
 
-      <!-- 1. КАСТОМНЫЙ СЕЛЕКТ: КУДА (СТРАНЫС ФЛАГАМИ) -->
+      <!-- 1. КАСТОМНЫЙ СЕЛЕКТ: КУДА -->
       <div class="qs-field full">
         <label>Куда</label>
-        <select id="qs-country" name="country" style="display: none;">
+        <select id="qs-country" name="country" style="display: none;" required>
           <!-- Популярные -->
           <option value="maldives" selected>Мальдивы</option>
           <option value="turkey">Турция</option>
@@ -641,10 +871,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         </div>
       </div>
 
-      <!-- 2. КАСТОМНЫЙ СЕЛЕКТ: ОТКУДА (ОБНОВЛЕННЫЕ ГОРОДА ВЫЛЕТА) -->
+      <!-- 2. КАСТОМНЫЙ СЕЛЕКТ: ОТКУДА -->
       <div class="qs-field full">
         <label>Откуда</label>
-        <select id="qs-from" name="from" style="display: none;">
+        <select id="qs-from" name="from" style="display: none;" required>
           <option value="volgograd">Волгоград</option>
           <option value="sochi">Сочи</option>
           <option value="ekb" selected>Екатеринбург</option>
@@ -735,7 +965,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <!-- 3. КАСТОМНЫЙ СЕЛЕКТ: НОЧЕЙ -->
       <div class="qs-field">
         <label>Ночей</label>
-        <select id="qs-nights" name="nights" style="display: none;">
+        <select id="qs-nights" name="nights" style="display: none;" required>
           <option value="5-7">5–7 ночей</option>
           <option value="7-10" selected>7–10 ночей</option>
           <option value="10-14">10–14 ночей</option>
@@ -776,15 +1006,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
       <!-- 4. КАСТОМНЫЙ СЕЛЕКТ: ТУРИСТОВ -->
       <div class="qs-field">
         <label>Туристов</label>
-        <select id="qs-people" name="people" style="display: none;">
+        <select id="qs-people" name="people" style="display: none;" required>
           <option value="1" data-kids="0">1 взрослый</option>
           <option value="2" data-kids="0" selected>2 взрослых</option>
-
           <option value="1-1" data-kids="1">1 взрослый + 1 ребёнок</option>
           <option value="1-2" data-kids="2">1 взрослый + 2 ребёнка</option>
           <option value="2-1" data-kids="1">2 взрослых + 1 ребёнок</option>
           <option value="2-2" data-kids="2">2 взрослых + 2 ребёнка</option>
-
           <option value="3" data-kids="0">3 взрослых</option>
           <option value="4" data-kids="0">4 взрослых</option>
         </select>
@@ -841,6 +1069,20 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <div class="qs-kids-container" id="qs-kids-container"></div>
       </div>
 
+      <!-- Юридические галочки согласия -->
+      <div class="qs-legal">
+        <label class="qs-checkbox-label">
+          <input type="checkbox" id="qs-pd-consent" required checked>
+          <span class="qs-checkbox-custom"></span>
+          <span class="qs-checkbox-text">Я согласен на обработку персональных данных согласно <a href="#" class="open-privacy">Политике конфиденциальности</a></span>
+        </label>
+        <label class="qs-checkbox-label">
+          <input type="checkbox" id="qs-promo-consent">
+          <span class="qs-checkbox-custom"></span>
+          <span class="qs-checkbox-text">Я даю отдельное согласие на получение информационных и рекламных рассылок</span>
+        </label>
+      </div>
+
       <!-- Три кнопки отправки -->
       <div class="qs-buttons-wrapper">
         <div class="qs-buttons-title">Отправить заявку через:</div>
@@ -855,9 +1097,8 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
           </button>
           <button type="button" class="qs-btn qs-btn-wa" data-messenger="wa">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.608.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp
-          </button>
-        </div>
+          WhatsApp
+        </a>
       </div>
     </form>
   </div>
@@ -1011,13 +1252,13 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Связь</h4>
+        <h4>Связь и Политики</h4>
         <ul>
           <li><a href="tel:+79221895963">+7 922 189-59-63</a></li>
           <li><a href="https://wa.me/79221895963" target="_blank" rel="noopener">WhatsApp</a></li>
           <li><a href="https://t.me/+79221895963" target="_blank" rel="noopener">Telegram</a></li>
           <li><a href="https://max.ru/u/f9LHodD0cOICdq5qa-p5AtI9h47OjjmsJKZcLp7qKT0zL7v1Zd7208-jxwM" target="_blank" rel="noopener">Max</a></li>
-          <li><a href="mailto:gazten@mail.ru">gazten@mail.ru</a></li>
+          <li><a href="#" class="open-privacy">Политика конфиденциальности</a></li>
         </ul>
       </div>
     </div>
@@ -1040,6 +1281,51 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     </div>
   </div>
 </footer>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-text">
+    Мы используем файлы cookie для аналитики и улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей <a href="#" class="open-privacy">Политикой конфиденциальности</a>.
+  </div>
+  <button class="cookie-btn" id="acceptCookies">Понятно, спасибо</button>
+</div>
+
+<!-- PRIVACY MODAL -->
+<div class="modal-overlay" id="privacyModal">
+  <div class="modal-content">
+    <button class="modal-close" id="closePrivacy" aria-label="Закрыть">&times;</button>
+    <div class="modal-header">
+      <h2>Политика конфиденциальности</h2>
+    </div>
+    <div class="modal-body">
+      <p>Настоящая Политика конфиденциальности разработана в соответствии с требованиями Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» и описывает, как туристическое агентство «Путешествие на вкус» (далее «Агентство», «мы») собирает, использует и защищает вашу персональную информацию.</p>
+      
+      <h3>1. Сбор и обработка информации</h3>
+      <p>Мы собираем информацию, которую вы добровольно предоставляете при заполнении форм на сайте: Имя / ФИО, номер телефона, параметры желаемого тура и т.д. Обработка осуществляется исключительно с вашего согласия, предоставляемого путем установки галочки в чекбоксе перед отправкой формы.</p>
+      
+      <h3>2. Цели сбора данных и рассылки</h3>
+      <p>Собранные данные используются для:</p>
+      <ul>
+        <li>Подбора и бронирования туристических продуктов;</li>
+        <li>Связи с вами через мессенджеры (WhatsApp, Telegram, Max) или по телефону;</li>
+        <li>Улучшения работы и удобства нашего сайта.</li>
+      </ul>
+      <p>Отправка рекламно-информационных рассылок (акции, скидки, спецпредложения) осуществляется <strong>строго при наличии вашего отдельного согласия</strong>, предоставленного в соответствующем чекбоксе, согласно ст. 14.3 КоАП РФ и ст. 18 38-ФЗ «О рекламе».</p>
+
+      <h3>3. Трансграничная передача и локализация данных (Cloudflare)</h3>
+      <p>Для обеспечения защиты от DDoS-атак, быстрого кэширования и стабильной работы сайта мы используем сервисы глобальной инфраструктуры Cloudflare. Ваши сетевые технические данные (включая IP-адрес и файлы cookie) могут обрабатываться на распределенных серверах Cloudflare, что может расцениваться как трансграничная передача данных. Оставляя заявку или продолжая пользоваться сайтом, вы даете согласие на такую обработку в целях защиты сайта.</p>
+
+      <h3>4. Передача третьим лицам</h3>
+      <p>Мы не продаем и не передаем ваши контактные данные третьим лицам, за исключением случаев, когда это необходимо для оформления тура (передача данных туроператорам, авиакомпаниям, отелям) или предусмотрено законодательством РФ.</p>
+      
+      <h3>5. Использование файлов Cookie</h3>
+      <p>Сайт использует файлы cookie. Это небольшие текстовые файлы, которые сохраняются на вашем устройстве. Они помогают нам анализировать трафик и делать сайт удобнее. Вы можете отключить использование cookie в настройках вашего браузера.</p>
+      
+      <h3>6. Ваши права и отзыв согласия</h3>
+      <p>Вы имеете право в любой момент отозвать свое согласие на обработку персональных данных или согласие на рекламную рассылку, написав нам по контактным данным, указанным на сайте. После получения отзыва мы прекратим обработку ваших данных и рассылку материалов.</p>
+    </div>
+  </div>
+</div>
 
 <script>
 // ИНИЦИАЛИЗАЦИЯ УНИВЕРСАЛЬНЫХ ВЫПАДАЮЩИХ СПИСКОВ
@@ -1094,6 +1380,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   });
 })();
 
+// ЛОГИКА ФОРМЫ И ОТПРАВКИ В МЕССЕНДЖЕРЫ
 (function(){
   var form = document.getElementById('qsForm');
   if (!form) return;
@@ -1103,8 +1390,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   var peopleSelect = document.getElementById('qs-people');
   var kidsWrapper = document.getElementById('qs-kids-wrapper');
   var kidsContainer = document.getElementById('qs-kids-container');
+  var pdConsent = document.getElementById('qs-pd-consent');
 
-  // Начальная установка дат
+  // Установка дат
   var today = new Date();
   var formatDate = function(d){
     var dd = String(d.getDate()).padStart(2,'0');
@@ -1131,7 +1419,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
     }
   });
 
-  // Логика добавления полей для детей
+  // Логика детей
   function updateKidsFields() {
     var selectedOption = peopleSelect.options[peopleSelect.selectedIndex];
     var kidsCount = parseInt(selectedOption.getAttribute('data-kids') || '0', 10);
@@ -1156,11 +1444,10 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   peopleSelect.addEventListener('change', updateKidsFields);
   updateKidsFields();
 
-  // Обработка клика по кнопкам мессенджеров
+  // Отправка
   var btns = form.querySelectorAll('.qs-btn');
   btns.forEach(function(btn){
     btn.addEventListener('click', function(){
-      // Проверка заполнения обязательных полей формы
       if (!form.reportValidity()) return;
 
       var messenger = btn.getAttribute('data-messenger');
@@ -1211,6 +1498,49 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   });
 })();
 
+// COOKIE BANNER И ПОЛИТИКА
+(function(){
+  var banner = document.getElementById('cookieBanner');
+  var acceptBtn = document.getElementById('acceptCookies');
+  
+  if (!localStorage.getItem('cookiesAccepted')) {
+    setTimeout(function() {
+      banner.classList.add('show');
+    }, 1500);
+  }
+
+  acceptBtn.addEventListener('click', function() {
+    localStorage.setItem('cookiesAccepted', 'true');
+    banner.classList.remove('show');
+  });
+
+  var modal = document.getElementById('privacyModal');
+  var closeBtn = document.getElementById('closePrivacy');
+  var openBtns = document.querySelectorAll('.open-privacy');
+
+  openBtns.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation(); // Чтобы клик по ссылке не переключал чекбокс
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  closeBtn.addEventListener('click', function() {
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  });
+
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) {
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+  });
+})();
+
+// АНИМАЦИИ И СКРОЛЛ
 (function(){
   var svg = document.querySelector('.dashed-trail');
   var path = document.getElementById('flightCurve');
