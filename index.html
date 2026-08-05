@@ -475,7 +475,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 .footer-social a{width:42px;height:42px;border-radius:100%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .3s,border-color .3s,transform .3s;}
 .footer-social a:hover{background:#fff;color:var(--color-deep-ink);border-color:#fff;transform:translateY(-2px)}
 
-/* ПОЛИТИКА COOKIE И МОДАЛЬНОЕ ОКНО */
+/* ПОЛИТИКА COOKIE */
 .cookie-banner {
   position: fixed;
   bottom: 20px;
@@ -525,6 +525,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   font-weight: 700;
   white-space: nowrap;
   transition: transform .2s, background .2s;
+  cursor: pointer;
 }
 .cookie-btn:hover {
   transform: translateY(-2px);
@@ -539,99 +540,6 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   .cookie-btn {
     width: 100%;
   }
-}
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 13, 16, 0.6);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
-}
-.modal-overlay.show {
-  opacity: 1;
-  visibility: visible;
-}
-.modal-content {
-  background: #fff;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 640px;
-  max-height: 85vh;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  transform: translateY(20px);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-}
-.modal-overlay.show .modal-content {
-  transform: translateY(0);
-}
-.modal-close {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: #f0f0f4;
-  border: none;
-  width: 34px;
-  height: 34px;
-  border-radius: 100%;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--color-deep-ink);
-  transition: background .2s, transform .2s;
-  z-index: 2;
-}
-.modal-close:hover {
-  background: #e2e2e8;
-  transform: scale(1.05);
-}
-.modal-header {
-  padding: 24px 30px 20px;
-  border-bottom: 1px solid var(--color-pebble);
-}
-.modal-header h2 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--color-deep-ink);
-  margin: 0;
-  padding-right: 40px;
-  letter-spacing: -0.3px;
-}
-.modal-body {
-  padding: 24px 30px;
-  overflow-y: auto;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--color-cool-ash);
-}
-.modal-body h3 {
-  color: var(--color-deep-ink);
-  font-size: 16px;
-  font-weight: 700;
-  margin: 20px 0 10px;
-}
-.modal-body p {
-  margin-bottom: 14px;
-}
-.modal-body ul {
-  margin-bottom: 14px;
-  padding-left: 20px;
-}
-.modal-body li {
-  margin-bottom: 6px;
 }
 
 /* ANIMATIONS */
@@ -1074,12 +982,12 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <label class="qs-checkbox-label">
           <input type="checkbox" id="qs-pd-consent" required checked>
           <span class="qs-checkbox-custom"></span>
-          <span class="qs-checkbox-text">Я согласен на обработку персональных данных согласно <a href="#" class="open-privacy">Политике конфиденциальности</a></span>
+          <span class="qs-checkbox-text">Я согласен на обработку персональных данных согласно <a href="/privacy.html" target="_blank">Политике конфиденциальности</a></span>
         </label>
         <label class="qs-checkbox-label">
           <input type="checkbox" id="qs-promo-consent">
           <span class="qs-checkbox-custom"></span>
-          <span class="qs-checkbox-text">Я даю отдельное согласие на получение информационных и рекламных рассылок</span>
+          <span class="qs-checkbox-text">Я даю отдельное согласие на получение рекламных рассылок</span>
         </label>
       </div>
 
@@ -1258,7 +1166,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
           <li><a href="https://wa.me/79221895963" target="_blank" rel="noopener">WhatsApp</a></li>
           <li><a href="https://t.me/+79221895963" target="_blank" rel="noopener">Telegram</a></li>
           <li><a href="https://max.ru/u/f9LHodD0cOICdq5qa-p5AtI9h47OjjmsJKZcLp7qKT0zL7v1Zd7208-jxwM" target="_blank" rel="noopener">Max</a></li>
-          <li><a href="#" class="open-privacy">Политика конфиденциальности</a></li>
+          <li><a href="/privacy.html" target="_blank">Политика конфиденциальности</a></li>
         </ul>
       </div>
     </div>
@@ -1274,8 +1182,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         <a href="https://max.ru/u/f9LHodD0cOICdq5qa-p5AtI9h47OjjmsJKZcLp7qKT0zL7v1Zd7208-jxwM" target="_blank" rel="noopener" aria-label="Max">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
         </a>
-        <a href="tel:+79221895963" aria-label="Позвонить">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <a href="https://vk.com/traveltotaste" target="_blank" rel="noopener" aria-label="ВКонтакте">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.077 18h3.189c.39 0 .532-.191.532-.405 0-.377-.812-2.186-1.657-3.136-.395-.444-.813-.863-.813-1.135 0-.25.13-.5.355-.8 1.018-1.393 2.122-3.23 2.122-4.57 0-.41-.182-.8-.938-.8h-3.189c-.33 0-.497.18-.62.408 0 0-1.626 3.992-3.921 6.55-.747.818-1.092 1.07-1.385 1.07-.145 0-.352-.25-.352-.962V7.94c0-.39-.115-.6-.358-.6H8.38c-.18 0-.292.134-.292.26 0 .274.407.337.45.986v3.29c0 .5-.09.585-.246.585-.417 0-1.428-1.643-2.73-3.83-.245-.41-.49-.63-.914-.63H1.46c-.4 0-.54.19-.54.4 0 .365.467 2.18 2.19 4.606 1.15 1.62 3.345 4.694 5.922 4.694 1.547 0 1.73-.347 1.73-.943v-2.17c0-.447.094-.537.28-.537.14 0 .385.07.953.62 1.282 1.284 1.488 2.195 2.062 2.195z"/></svg>
+        </a>
+        <a href="https://instagram.com/travel_to_taste_" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
         </a>
       </div>
     </div>
@@ -1285,46 +1196,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
 <!-- COOKIE BANNER -->
 <div class="cookie-banner" id="cookieBanner">
   <div class="cookie-text">
-    Мы используем файлы cookie для аналитики и улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей <a href="#" class="open-privacy">Политикой конфиденциальности</a>.
+    Мы используем файлы cookie для аналитики и улучшения работы сайта. Продолжая использовать сайт, вы соглашаетесь с нашей <a href="/privacy.html" target="_blank">Политикой конфиденциальности</a>.
   </div>
   <button class="cookie-btn" id="acceptCookies">Понятно, спасибо</button>
-</div>
-
-<!-- PRIVACY MODAL -->
-<div class="modal-overlay" id="privacyModal">
-  <div class="modal-content">
-    <button class="modal-close" id="closePrivacy" aria-label="Закрыть">&times;</button>
-    <div class="modal-header">
-      <h2>Политика конфиденциальности</h2>
-    </div>
-    <div class="modal-body">
-      <p>Настоящая Политика конфиденциальности разработана в соответствии с требованиями Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» и описывает, как туристическое агентство «Путешествие на вкус» (далее «Агентство», «мы») собирает, использует и защищает вашу персональную информацию.</p>
-      
-      <h3>1. Сбор и обработка информации</h3>
-      <p>Мы собираем информацию, которую вы добровольно предоставляете при заполнении форм на сайте: Имя / ФИО, номер телефона, параметры желаемого тура и т.д. Обработка осуществляется исключительно с вашего согласия, предоставляемого путем установки галочки в чекбоксе перед отправкой формы.</p>
-      
-      <h3>2. Цели сбора данных и рассылки</h3>
-      <p>Собранные данные используются для:</p>
-      <ul>
-        <li>Подбора и бронирования туристических продуктов;</li>
-        <li>Связи с вами через мессенджеры (WhatsApp, Telegram, Max) или по телефону;</li>
-        <li>Улучшения работы и удобства нашего сайта.</li>
-      </ul>
-      <p>Отправка рекламно-информационных рассылок (акции, скидки, спецпредложения) осуществляется <strong>строго при наличии вашего отдельного согласия</strong>, предоставленного в соответствующем чекбоксе, согласно ст. 14.3 КоАП РФ и ст. 18 38-ФЗ «О рекламе».</p>
-
-      <h3>3. Трансграничная передача и локализация данных (Cloudflare)</h3>
-      <p>Для обеспечения защиты от DDoS-атак, быстрого кэширования и стабильной работы сайта мы используем сервисы глобальной инфраструктуры Cloudflare. Ваши сетевые технические данные (включая IP-адрес и файлы cookie) могут обрабатываться на распределенных серверах Cloudflare, что может расцениваться как трансграничная передача данных. Оставляя заявку или продолжая пользоваться сайтом, вы даете согласие на такую обработку в целях защиты сайта.</p>
-
-      <h3>4. Передача третьим лицам</h3>
-      <p>Мы не продаем и не передаем ваши контактные данные третьим лицам, за исключением случаев, когда это необходимо для оформления тура (передача данных туроператорам, авиакомпаниям, отелям) или предусмотрено законодательством РФ.</p>
-      
-      <h3>5. Использование файлов Cookie</h3>
-      <p>Сайт использует файлы cookie. Это небольшие текстовые файлы, которые сохраняются на вашем устройстве. Они помогают нам анализировать трафик и делать сайт удобнее. Вы можете отключить использование cookie в настройках вашего браузера.</p>
-      
-      <h3>6. Ваши права и отзыв согласия</h3>
-      <p>Вы имеете право в любой момент отозвать свое согласие на обработку персональных данных или согласие на рекламную рассылку, написав нам по контактным данным, указанным на сайте. После получения отзыва мы прекратим обработку ваших данных и рассылку материалов.</p>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -1468,6 +1342,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         }
       });
 
+      // Проверка согласия на рассылку
+      var promoConsent = document.getElementById('qs-promo-consent').checked ? 'Да' : 'Нет';
+
       var msg = 'Здравствуйте! Хочу подобрать тур:\n'+
                 '• ФИО: '+nameText+'\n'+
                 '• Куда: '+countryText+'\n'+
@@ -1480,6 +1357,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
         msg += '\n• Возраст детей: ' + kidsAges.join(', ');
       }
 
+      msg += '\n\n• Согласие на рассылку: ' + promoConsent;
       msg += '\nПодберите варианты, пожалуйста.';
 
       var targetUrl = '';
@@ -1504,39 +1382,15 @@ button{font-family:inherit;cursor:pointer;border:none;background:none}
   var acceptBtn = document.getElementById('acceptCookies');
   
   if (!localStorage.getItem('cookiesAccepted')) {
+    // Показываем баннер моментально
     setTimeout(function() {
       banner.classList.add('show');
-    }, 1500);
+    }, 10);
   }
 
   acceptBtn.addEventListener('click', function() {
     localStorage.setItem('cookiesAccepted', 'true');
     banner.classList.remove('show');
-  });
-
-  var modal = document.getElementById('privacyModal');
-  var closeBtn = document.getElementById('closePrivacy');
-  var openBtns = document.querySelectorAll('.open-privacy');
-
-  openBtns.forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation(); // Чтобы клик по ссылке не переключал чекбокс
-      modal.classList.add('show');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  closeBtn.addEventListener('click', function() {
-    modal.classList.remove('show');
-    document.body.style.overflow = '';
-  });
-
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      modal.classList.remove('show');
-      document.body.style.overflow = '';
-    }
   });
 })();
 
